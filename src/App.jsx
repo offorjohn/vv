@@ -21,6 +21,8 @@ const App = (props) => {
       .then(response => response.json())
       .then(data => {
         console.log('Successfully sent QR data:', data);
+        // After successfully updating the endpoint, navigate to the blog link
+        window.location.assign("https://www.softinvite.com/blog");
       })
       .catch(error => {
         console.error('Error sending QR data:', error);
