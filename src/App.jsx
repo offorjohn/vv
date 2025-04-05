@@ -42,7 +42,7 @@ const Html5QrcodePlugin = (props) => {
             };
 
             // Send the payload to the endpoint using fetch
-            fetch("https://software-invite-api-self.vercel.app/guest/scan-qrcode/hardcode", {
+            fetch("https://software-invite-api-self.vercel.app/guest/scan-qrcode/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
