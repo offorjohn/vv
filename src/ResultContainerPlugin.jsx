@@ -44,37 +44,38 @@ const ResultContainerTable = ({ data }) => {
 const ResultContainerPlugin = (props) => {
   const results = filterResults(props.results);
 
-  // Assume that when results are available, one of them is the successfully scanned result.
-  // And that the scanned result contains the Cloudinary link.
   useEffect(() => {
     if (results.length > 0) {
       // Replace with logic to pick the correct Cloudinary URL from the scan.
       const cloudinaryLink = "https://res.cloudinary.com/dno2asrsh/image/upload/v1743854520/qr_codes/chukwuebuka_Offor_qr.png";
 
-      // Call the API endpoint with the Cloudinary link
-      fetch('https://software-invite-api-self.vercel.app/guest/scan-qrcode/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ qrData: cloudinaryLink }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
+      // Set a timeout of three seconds before sending the API request.
+      const timer = setTimeout(() => {
+        fetch('https://software-invite-api-self.vercel.app/guest/scan-qrcode/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ qrData: cloudinaryLink }),
         })
-        .then((data) => {
-          // Optionally handle the API response data here.
-          console.log('API call success:', data);
-          // Navigate back to the blog URL.
-          window.location.href = 'https://www.softinvite.com/blog';
-        })
-        .catch((error) => {
-          console.error('API call error:', error);
-          // Handle the error as needed.
-        });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log('API call success:', data);
+            // Navigate back to the blog URL.
+            window.location.href = 'https://www.softinvite.com/blog';
+          })
+          .catch((error) => {
+            console.error('API call error:', error);
+          });
+      }, 3000);
+
+      // Cleanup the timeout if the component unmounts before the timeout fires.
+      return () => clearTimeout(timer);
     }
   }, [results]);
 
