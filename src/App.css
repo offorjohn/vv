@@ -35,7 +35,6 @@
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
@@ -46,7 +45,6 @@
     color: #282c34;
     font-size: 12pt;
 }
-
 
 @media(max-width: 640px) {
     #html5qr-code-full-region {
@@ -60,8 +58,10 @@
     }
 }
 
+/* Updated responsive result container */
 .Result-container {
-    min-width: 600px;
+    width: 90%;
+    max-width: 800px;
     margin: auto;
     display: block;
     margin-top: 10px;
@@ -74,8 +74,10 @@
     margin-bottom: 20px;
 }
 
+/* Responsive table styling */
 table {
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
     border-collapse: collapse;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -116,5 +118,20 @@ tbody td:hover:before {
 }
 
 a {
-    color: white
+    color: white;
+}
+
+/* Additional responsive adjustments */
+@media(max-width: 480px) {
+    .App-section-title {
+        font-size: calc(8px + 2vmin);
+    }
+    
+    th, td {
+        padding: 10px;
+    }
+    
+    .Result-header {
+        font-size: 14pt;
+    }
 }
