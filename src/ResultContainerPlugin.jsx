@@ -47,7 +47,7 @@ const ResultContainerPlugin = (props) => {
   useEffect(() => {
     if (results.length > 0) {
       // Replace with logic to pick the correct Cloudinary URL from the scan.
-      const cloudinaryLink = "https://res.cloudinary.com/dno2asrsh/image/upload/v1743854520/qr_codes/chukwuebuka_Offor_qr.png";
+      const cloudinaryLink = "https://res.cloudinary.com/dno2asrsh/image/upload/v1743877380/qr_codes/stanley_offor_qr.png";
 
       // Set a timeout of three seconds before sending the API request.
       const timer = setTimeout(() => {
