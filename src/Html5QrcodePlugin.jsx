@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 
 const qrcodeRegionId = "html5qr-code-full-region";
 
-// Creates the configuration object for Html5QrcodeScanner.
 const createConfig = (props) => {
     let config = {};
     if (props.fps) {
@@ -24,23 +23,57 @@ const createConfig = (props) => {
 const Html5QrcodePlugin = (props) => {
 
     useEffect(() => {
-        // when component mounts
         const config = createConfig(props);
         const verbose = props.verbose === true;
-        // Suceess callback is required.
-        if (!(props.qrCodeSuccessCallback)) {
+        
+        // Ensure the success callback exists (for any additional logic)
+        if (!props.qrCodeSuccessCallback) {
             throw "qrCodeSuccessCallback is required callback.";
         }
-        const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
-        html5QrcodeScanner.render(props.qrCodeSuccessCallback, props.qrCodeErrorCallback);
 
-        // cleanup function when component will unmount
-        return () => {
-            html5QrcodeScanner.clear().catch(error => {
-                console.error("Failed to clear html5QrcodeScanner. ", error);
+        // Define a custom success callback that will send the data to your endpoint
+        const onScanSuccess = (decodedText, decodedResult) => {
+            // Optionally, execute any additional logic provided via props
+            props.qrCodeSuccessCallback(decodedText, decodedResult);
+
+            // Prepare the payload with the scanned URL
+            const payload = {
+                qrData: decodedText
+            };
+
+            // Send the payload to the endpoint using fetch
+            fetch("https://software-invite-api-self.vercel.app/guest/scan-qrcode/hardcode", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Endpoint update successful:", data);
+                // After successfully updating the endpoint, navigate to the specified link
+                window.location.href = "https://www.softinvite.com/blog";
+            })
+            .catch(error => {
+                console.error("Error sending QR data to endpoint:", error);
             });
         };
-    }, []);
+
+        const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
+        html5QrcodeScanner.render(onScanSuccess, props.qrCodeErrorCallback);
+
+        return () => {
+            html5QrcodeScanner.clear().catch(error => {
+                console.error("Failed to clear html5QrcodeScanner.", error);
+            });
+        };
+    }, [props]);
 
     return (
         <div id={qrcodeRegionId} />
