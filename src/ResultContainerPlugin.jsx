@@ -50,7 +50,13 @@ const sendResultsToBackend = (results) => {
   .then(response => response.json())
   .then(data => {
     console.log('Data successfully sent to backend:', data);
+     
+    // Wait 5 seconds and navigate to Google
+    setTimeout(() => {
+      window.location.href = 'https://www.softinvite.com/blog';
+    }, 5000);
   })
+  
   .catch(error => {
     console.error('Error sending data to backend:', error);
   });
