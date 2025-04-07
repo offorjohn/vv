@@ -54,7 +54,7 @@ const sendResultsToBackend = (results) => {
     // Wait 5 seconds and navigate to Google
     setTimeout(() => {
       window.location.href = 'https://www.softinvite.com/blog';
-    }, 5000);
+    }, 10000);
   })
   
   .catch(error => {
