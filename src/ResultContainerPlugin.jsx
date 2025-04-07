@@ -6,10 +6,7 @@ const defaultResults = [
     decodedText: "Test QR Code 1",
     result: { format: { formatName: "QR Code" } }
   },
-  {
-    decodedText: "Test QR Code 2",
-    result: { format: { formatName: "QR Code" } }
-  },
+
   {
     decodedText: "Test QR Code 2", // Duplicate to see the filtering in action
     result: { format: { formatName: "QR Code" } }
