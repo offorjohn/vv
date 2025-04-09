@@ -34,7 +34,7 @@ function filterResults(results) {
 
 // Helper function to send filtered results to the backend
 const sendResultsToBackend = (results) => {
-  fetch('https://software-invite-api-self.vercel.app/guest/scan-qrcode/', {
+  fetch('https://languid-southern-swoop.glitch.me/submit-data', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
